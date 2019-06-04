@@ -8,6 +8,7 @@
 #include "InsertionSort.h"
 #include "MergeSort.h"
 #include "MergeSortBU.h"
+#include "QuickSort.h"
 
 int main()
 {
@@ -18,14 +19,17 @@ int main()
 	int* arr1 = SortTestHelper::generateRandomArray(n, 0, n);
 	int* arr2 = SortTestHelper::copyIntArray(arr1, n);
 	int* arr3 = SortTestHelper::copyIntArray(arr1, n);
+	int* arr4 = SortTestHelper::copyIntArray(arr1, n);
 
-	SortTestHelper::testSort("Insertion Sort", insertionSort, arr1, n);
+	//SortTestHelper::testSort("Insertion Sort", insertionSort, arr1, n);
 	SortTestHelper::testSort("Merge Sort", mergeSort, arr2, n);
-	SortTestHelper::testSort("Merge Sort Buttom Up", mergeSortBU, arr3, n);
+	//SortTestHelper::testSort("Merge Sort Buttom Up", mergeSortBU, arr3, n);
+	SortTestHelper::testSort("Quick Sort", quickSort, arr4, n);
 
 	delete[] arr1;
 	delete[] arr2;
 	delete[] arr3;
+	delete[] arr4;
 
 	cout << endl;
 
@@ -33,18 +37,21 @@ int main()
 	// 对于近乎有序的数组, 数组越有序, InsertionSort的时间性能越趋近于O(n)
 	// 所以可以尝试, 当swapTimes比较大时, MergeSort更快
 	// 但是当swapTimes小到一定程度, InsertionSort变得比MergeSort快
-	int swapTimes = 1000;
+	int swapTimes = 100;
 	assert(swapTimes >= 0);
 
 	cout << "Test for nearly ordered array, size = " << n << ", swap time = " << swapTimes << endl;
 	arr1 = SortTestHelper::generateNearlyOrderedArray(n, swapTimes);
 	arr2 = SortTestHelper::copyIntArray(arr1, n);
+	arr3 = SortTestHelper::copyIntArray(arr1, n);
 
-	SortTestHelper::testSort("Insertion Sort", insertionSort, arr1, n);
+	//SortTestHelper::testSort("Insertion Sort", insertionSort, arr1, n);
 	SortTestHelper::testSort("Merge Sort", mergeSort, arr2, n);
+	SortTestHelper::testSort("Quick Sort", quickSort, arr3, n);
 
 	delete[] arr1;
 	delete[] arr2;
+	delete[] arr3;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
