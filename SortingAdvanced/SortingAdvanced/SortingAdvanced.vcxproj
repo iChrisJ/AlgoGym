@@ -156,6 +156,7 @@
     <ClInclude Include="MergeSortBU.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="QuickSort.h" />
+    <ClInclude Include="QuickSort3Ways.h" />
     <ClInclude Include="SortTestHelper.h" />
   </ItemGroup>
   <ItemGroup>
