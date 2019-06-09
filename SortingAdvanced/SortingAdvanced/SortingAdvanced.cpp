@@ -10,6 +10,7 @@
 #include "MergeSortBU.h"
 #include "QuickSort.h"
 #include "QuickSort3Ways.h"
+#include "MergeSort2.h"
 
 int main()
 {
@@ -25,9 +26,10 @@ int main()
 
 	//SortTestHelper::testSort("Insertion Sort", insertionSort, arr1, n);
 	SortTestHelper::testSort("Merge Sort", mergeSort, arr2, n);
+	SortTestHelper::testSort("Merge Sort 2", mergeSort2, arr3, n);
 	//SortTestHelper::testSort("Merge Sort Buttom Up", mergeSortBU, arr3, n);
-	SortTestHelper::testSort("Quick Sort", quickSort, arr4, n);
-	SortTestHelper::testSort("Quick Sort 3 Ways", quickSort3Ways, arr5, n);
+	//SortTestHelper::testSort("Quick Sort", quickSort, arr4, n);
+	//SortTestHelper::testSort("Quick Sort 3 Ways", quickSort3Ways, arr5, n);
 
 	delete[] arr1;
 	delete[] arr2;

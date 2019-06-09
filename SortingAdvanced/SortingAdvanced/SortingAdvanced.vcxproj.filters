@@ -36,6 +36,9 @@
     <ClInclude Include="QuickSort3Ways.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MergeSort2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
