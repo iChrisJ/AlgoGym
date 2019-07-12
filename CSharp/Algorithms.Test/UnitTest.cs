@@ -20,6 +20,15 @@ namespace Algorithms.Test
 		}
 
 		[Test]
+		public void MergeSortTest()
+		{
+			List<int> list = Utility.GenerateRandomList(1000000, 0, 1000000);
+
+			Sorts.Sorts.MergeSort(list);
+			Assert.IsTrue(Utility.IsSorted(list), "The list is not sorted.");
+		}
+
+		[Test]
 		public void QuickSortTest()
 		{
 			List<int> list = Utility.GenerateRandomList(1000000, 0, 1000000);
