@@ -63,5 +63,14 @@ namespace Algorithms.Test
 			Sorts.Sorts.QuickSort3Ways(list);
 			Assert.IsTrue(Utility.IsSorted(list), "The list is not sorted.");
 		}
+
+		[Test]
+		public void HeapSortTest()
+		{
+			List<int> list = Utility.GenerateRandomList(10000000, 0, 10000000);
+
+			Sorts.Sorts.HeapSort(list);
+			Assert.IsTrue(Utility.IsSorted(list), "The list is not sorted.");
+		}
 	}
 }
