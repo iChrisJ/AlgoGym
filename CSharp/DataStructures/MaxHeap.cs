@@ -90,6 +90,5 @@ namespace DataStructures
 			}
 		}
 		#endregion Methods
-
 	}
 }
