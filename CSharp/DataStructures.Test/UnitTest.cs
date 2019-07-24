@@ -2,6 +2,9 @@ using DataStructures.Test;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Text;
 
 namespace DataStructures.Tests
 {
@@ -73,6 +76,31 @@ namespace DataStructures.Tests
 			Assert.IsTrue(Utility.IsInvertedSorted(list), "The list is not sorted.");
 		}
 
-	}
+		[Test]
+		public void BSTUseTest()
+		{
+			string filepath = @"..\..\..\Resources\Communist.txt";
+			string[] words = File.ReadAllText(filepath, Encoding.UTF8).Split(' ');
 
+			Console.WriteLine($"Word count: {words.Length}");
+
+			Stopwatch sw = new Stopwatch();
+			sw.Start();
+
+			BinarySearchTree<string, int> bst = new BinarySearchTree<string, int>();
+			foreach (string word in words)
+			{
+				int val = bst.Search(word.ToLower());
+				bst.Insert(word.ToLower(), ++val);
+			}
+
+			if (bst.Contains("unite"))
+				Console.WriteLine($"unite: {bst.Search("unite")}");
+			else
+				Console.WriteLine("No word 'unite' in the file.");
+			sw.Stop();
+			Console.WriteLine($"BST, time:{sw.ElapsedMilliseconds} ms");
+			Assert.IsTrue(bst.Search("unite") == 1);
+		}
+	}
 }

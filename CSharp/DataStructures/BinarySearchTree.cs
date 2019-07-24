@@ -327,6 +327,85 @@ namespace DataStructures
 				return successor;
 			}
 		}
+
+		/// <summary>
+		/// 寻找key的floor值, 递归算法
+		/// 如果不存在key的floor值(key比BST中的最小值还小), 返回default value
+		/// </summary>
+		public K Floor(K key)
+		{
+			if (Count == 0 || key.CompareTo(Minimun()) < 0)
+				return default(K);
+
+			Node floorNode = Floor(root, key);
+			return floorNode == null ? default(K) : floorNode.Key;
+		}
+
+		/// <summary>
+		/// 在以node为根的二叉搜索树中, 寻找key的floor值所处的节点, 递归算法
+		/// </summary>
+		private Node Floor(Node node, K key)
+		{
+			if (node == null)
+				return null;
+
+			// 如果node的key值和要寻找的key值相等, 则node本身就是key的floor节点.
+			if (key.CompareTo(node.Key) == 0)
+				return node;
+
+			// 如果node.Key > key, 则要寻找的key的floor节点一定在node的左子树中
+			if (key.CompareTo(node.Key) < 0)
+				return Floor(node.Left, key);
+
+			// 如果node.Key < key
+			// 则node有可能是key的floor节点, 也有可能不是(存在比node->key大但是小于key的其余节点)
+			// 需要尝试向node的右子树寻找一下
+			Node tempNode = Floor(node.Right, key);
+			if (tempNode != null)
+				return tempNode;
+
+			return node;
+		}
+
+		/// <summary>
+		/// 寻找key的ceil值, 递归算法
+		/// 如果不存在key的ceil值(key比BST中的最大值还大), 返回default value.
+		/// </summary>
+		public K Ceil(K key)
+		{
+			if (Count == 0 || key.CompareTo(Maximum()) > 0)
+				return default(K);
+
+			Node ceilNode = Ceil(root, key);
+			return ceilNode == null ? default(K) : ceilNode.Key;
+		}
+
+		/// <summary>
+		/// 在以node为根的二叉搜索树中, 寻找key的ceil值所处的节点, 递归算法
+		/// </summary>
+		private Node Ceil(Node node, K key)
+		{
+			if (node == null)
+				return null;
+
+			// 如果node的key值和要寻找的key值相等, 则node本身就是key的ceil节点
+			if (key.CompareTo(node.Key) == 0)
+				return node;
+
+			// 如果node的key值比要寻找的key值小
+			// 则要寻找的key的ceil节点一定在node的右子树中
+			if (key.CompareTo(node.Key) > 0)
+				return Ceil(node.Right, key);
+
+			// 如果node->key > key
+			// 则node有可能是key的ceil节点, 也有可能不是(存在比node->key小但是大于key的其余节点)
+			// 需要尝试向node的左子树寻找一下
+			Node tempNode = Ceil(node.Left, key);
+			if (tempNode != null)
+				return tempNode;
+
+			return node;
+		}
 		#endregion Methods
 	}
 }
