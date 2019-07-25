@@ -114,16 +114,17 @@ namespace DataStructures
 		/// <returns></returns>
 		public V Search(K key)
 		{
-			return Search(root, key);
+			Node node = Search(root, key);
+			return node == null ? default(V) : node.Value;
 		}
 
-		private V Search(Node node, K key)
+		private Node Search(Node node, K key)
 		{
 			if (node == null)
-				return default(V);
+				return null;
 
 			if (key.CompareTo(node.Key) == 0)
-				return node.Value;
+				return node;
 			else if (key.CompareTo(node.Key) < 0)
 				return Search(node.Left, key);
 			else
@@ -405,6 +406,90 @@ namespace DataStructures
 				return tempNode;
 
 			return node;
+		}
+
+		/// <summary>
+		/// 查找key的前驱
+		/// 如果不存在key的前驱(key不存在, 或者key是整棵二叉树中的最小值), 则返回NULL
+		/// </summary>
+		public K Predecessor(K key)
+		{
+			Node node = Search(root, key);
+
+			if (node == null)
+				return default(K);
+
+			if (node.Left != null)
+				return Maximum(node.Left).Key;
+
+			Node preNode = PredecessorFromAncestor(root, key);
+
+			return preNode == null ? default(K) : preNode.Key;
+		}
+
+		/// <summary>
+		/// 在以node为根的二叉搜索树中, 寻找key的祖先中,比key小的最大值所在节点, 递归算法
+		/// 向下搜索到的结果直接返回
+		/// </summary>
+		private Node PredecessorFromAncestor(Node node, K key)
+		{
+			if (node == null || key.CompareTo(node.Key) == 0)
+				return null;
+
+			if (key.CompareTo(node.Key) < 0)
+				// 如果当前节点大于key, 则当前节点不可能是比key小的最大值
+				// 向下搜索到的结果直接返回
+				return PredecessorFromAncestor(node.Left, key);
+			else
+			{
+				// 如果当前节点小于key, 则当前节点有可能是比key小的最大值
+				// 向右继续搜索, 将结果存储到tempNode中
+				Node tempNode = PredecessorFromAncestor(node.Right, key);
+				return tempNode == null ? node : tempNode; // 如果tempNode为空, 则当前节点即为结果
+			}
+
+		}
+
+		/// <summary>
+		/// 查找key的后继, 递归算法
+		/// 如果不存在key的后继(key不存在, 或者key是整棵二叉树中的最大值), 则返回NULL
+		/// </summary>
+		public K Successor(K key)
+		{
+			Node node = Search(root, key);
+
+			if (node == null)
+				return default(K);
+
+			// 如果key所在的节点右子树不为空,则其右子树的最小值为key的后继
+			if (node.Right != null)
+				return Minimun(node.Right).Key;
+
+			// 否则, key的后继在从根节点到key的路径上, 在这个路径上寻找到比key大的最小值, 即为key的后继
+			Node sucNode = SuccessorFromAncestor(root, key);
+			return sucNode == null ? default(K) : sucNode.Key;
+		}
+
+		/// <summary>
+		/// 在以node为根的二叉搜索树中, 寻找key的祖先中,比key大的最小值所在节点, 递归算法
+		/// 算法调用前已保证key存在在以node为根的二叉树中
+		/// </summary>
+		private Node SuccessorFromAncestor(Node node, K key)
+		{
+			if (node == null || key.CompareTo(node.Key) == 0)
+				return null;
+
+			if (key.CompareTo(node.Key) > 0)
+				// 如果当前节点小于key, 则当前节点不可能是比key大的最小值
+				// 向下搜索到的结果直接返回
+				return SuccessorFromAncestor(node.Right, key);
+			else
+			{
+				// 如果当前节点大于key, 则当前节点有可能是比key大的最小值
+				// 向左继续搜索, 将结果存储到tempNode中
+				Node tempNode = SuccessorFromAncestor(node.Left, key);
+				return tempNode == null ? node : tempNode;
+			}
 		}
 		#endregion Methods
 	}
